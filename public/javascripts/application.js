@@ -1,9 +1,10 @@
-// $(document).ready(function() {
-  // Plotter.Updater.plot("graph");
-  // updateGraph();
-// });
+$(document).ready(function() {
+  var Plotter = new Graph.Plotter();
+  Plotter.plot("graph");
+  setInterval(periodicRefresh, 100);
 
-// function updateGraph() {
-  // Plotter.Updater.refresh();
-  // setInterval(updateGraph, 10000);
-// }
+  function periodicRefresh() {
+    Plotter.refresh();
+  }
+});
+

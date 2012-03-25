@@ -41,4 +41,14 @@ describe("Graph.Series", function() {
     expect(seriesWithLimit.points()).toEqual([[5,6],[7,8]]);
   });
 
+  it("should return the number of elements added in total to a series as size", function() {
+    fourHundredPoints = [];
+    for(var i=0,j=0; i<400; i++,j++) {
+      fourHundredPoints.push(new Graph.Point(i,j))
+    };
+    series.addAll(fourHundredPoints);
+    expect(series.total()).toEqual(400);
+    expect(series.points().length).toEqual(300);
+  });
+
 });
