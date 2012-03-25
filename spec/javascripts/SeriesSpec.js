@@ -25,4 +25,20 @@ describe("Graph.Series", function() {
     expect(series.points()).toEqual([[1,2],[3,4],[5,6],[7,8]]);
   });
 
+  it("should honor the max element limit for series", function() {
+    fourHundredPoints = [];
+    for(var i=0,j=0; i<400; i++,j++) {
+      fourHundredPoints.push(new Graph.Point(i,j))
+    };
+    series.addAll(fourHundredPoints);
+    expect(series.points().length).toEqual(300);
+  });
+
+  it("should override the maxlimit value for the graph", function() {
+    seriesWithLimit = new Graph.Series("limited_series", 2);
+    seriesWithLimit.addAll(points);
+    expect(seriesWithLimit.points().length).toEqual(2);
+    expect(seriesWithLimit.points()).toEqual([[5,6],[7,8]]);
+  });
+
 });

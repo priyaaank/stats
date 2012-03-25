@@ -148,12 +148,16 @@ Graph.Point = function(xCord, yCord) {
   };
 };
 
-Graph.Series = function(seriesName) {
+Graph.Series = function(seriesName, maxElements) {
   
   var _name = seriesName;
+  var _maxElementLimit = (maxElements || 300);
   var pointCollection = [];
   
   var add = function(point) {
+    if(pointCollection.length >= _maxElementLimit) {
+      pointCollection = pointCollection.slice(1);
+    }
     pointCollection.push(point.value());
   };
 
@@ -214,5 +218,17 @@ Graph.SeriesCollection = function() {
     fetch: fetch,
     data : data
   };
+};
 
+Graph.Plotter = function() {
+
+  var plotOptions = {
+    series : {showSize: 5},
+    yaxis  : {min: 0},
+    xaxis  : {show: false}
+  };
+
+  var plot = function() {
+
+  };
 };
