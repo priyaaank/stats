@@ -100,9 +100,11 @@ Graph.Plotter = function() {
   var graph;
 
   var plotOptions = {
-    series : {showSize: 5},
-    yaxis  : {min: 0},
-    xaxis  : {show: false}
+    series    : {showSize: 5},
+    points    : {show:true},
+    lines     : {show:true},
+    yaxis     : {min: 0},
+    xaxis     : {show: false}
   };
 
   var plot = function(elementId) {
@@ -112,7 +114,6 @@ Graph.Plotter = function() {
 
   var refresh = function() {
     seriesUpdater.update();
-    console.log(seriesCollection.data());
     graph.setData(seriesCollection.data());
     graph.setupGrid();
     graph.draw();
@@ -129,7 +130,10 @@ Graph.SeriesUpdater = function(seriesHolder) {
   var seriesCollection = seriesHolder;
 
   var _serverData = function() {
-    return { "queue_simple" : Math.random() * 100 }
+    return { 
+      "queue_simple"  : Math.random() * 100,
+      "awesome_queue" : Math.random() * 100,
+    }
   };
 
   var updateSeriesData = function() {
