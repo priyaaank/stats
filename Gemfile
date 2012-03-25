@@ -6,4 +6,5 @@ gem 'shotgun'
 
 group :test do
 	gem 'rspec'	
+  gem 'jasmine'
 end
