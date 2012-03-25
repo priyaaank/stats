@@ -134,24 +134,48 @@ Plotter.Point = function() {
 
 var Graph = {}; 
 
-Graph.Point = function() {
+Graph.Point = function(xCord, yCord) {
   
-  var xCordinate;
-  var yCordinate;
-
-  var init  = function(xCord, yCord) {
-    xCordinate = xCord;
-    yCordinate = yCord;
-    
-    return this;
-  };
+  var xCordinate = xCord;
+  var yCordinate = yCord;
 
   var value = function() {
     return [xCordinate, yCordinate];
   };
 
   return {
-    new   : init,
     value : value
   };
-}();
+};
+
+Graph.Series = function(seriesName) {
+  
+  var _name = seriesName;
+  var pointCollection = [];
+  
+  var add = function(point) {
+    pointCollection.push(point.value());
+  };
+
+  var addAll = function(points) {
+    $(points).each(function(index, element) {
+      add(element);
+    });
+  };
+  
+  var name = function() {
+    return _name;
+  };
+
+  var points = function() {
+    return pointCollection;
+  };
+
+  return {
+    name   : name,
+    add    : add,
+    addAll : addAll,
+    points : points
+  };
+
+};
