@@ -179,3 +179,40 @@ Graph.Series = function(seriesName) {
   };
 
 };
+
+Graph.SeriesCollection = function() {
+  
+  var seriesCollection = {};
+
+  var add = function(series) {
+    seriesCollection[series.name()] = series;
+  };
+
+  var list = function() {
+    var dataToReturn = [];
+    for(var seriesName in seriesCollection) {
+      dataToReturn.push(seriesCollection[seriesName]);
+    }
+    return dataToReturn;
+  };
+
+  var fetch = function(seriesName) {
+    return seriesCollection[seriesName];
+  };
+
+  var data = function() {
+    var dataToReturn = []
+    for(var name in seriesCollection) {
+      dataToReturn.push(seriesCollection[name].points());
+    }
+    return dataToReturn;
+  };
+
+  return { 
+    add  : add, 
+    list : list,
+    fetch: fetch,
+    data : data
+  };
+
+};
