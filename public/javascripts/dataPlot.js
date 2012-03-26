@@ -134,7 +134,7 @@ Graph.Updater = function(plotter) {
 
   var _serverData = function() {
     $.ajax({
-      url     : "http://localhost:9393/sqs.json",
+      url     : "/sqs.json",
       method  : "GET",
       success : _successCallback
     });
