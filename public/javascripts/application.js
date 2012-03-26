@@ -1,10 +1,10 @@
 $(document).ready(function() {
-  var Plotter = new Graph.Plotter();
-  Plotter.plot("graph");
+  var plotter = new Graph.Plotter("graph");
+  var updater = new Graph.Updater(plotter);
   setInterval(periodicRefresh, 1000);
 
   function periodicRefresh() {
-    Plotter.refresh();
+    updater.update();
   }
 });
 

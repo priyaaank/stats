@@ -93,11 +93,12 @@ Graph.SeriesCollection = function() {
   };
 };
 
-Graph.Plotter = function() {
+Graph.Plotter = function(elementId) {
 
   var seriesCollection = new Graph.SeriesCollection();
-  var seriesUpdater = new Graph.SeriesUpdater(seriesCollection);
   var graph;
+  var uiElementId = elementId;
+  var initialized = false;
 
   var plotOptions = {
     series    : {showSize: 5},
@@ -107,48 +108,56 @@ Graph.Plotter = function() {
     xaxis     : {show: false}
   };
 
-  var plot = function(elementId) {
-    seriesUpdater.update();
-    graph = $.plot($("#"+elementId), seriesCollection.data(), plotOptions);
+  var plot = function(data) {
+    initialized ? _refresh(data) : _plot(data);
   };
 
-  var refresh = function() {
-    seriesUpdater.update();
-    graph.setData(seriesCollection.data());
+  var _plot = function(data) {
+    graph = $.plot($("#"+uiElementId), data, plotOptions);
+    initialized = true;
+  };
+
+  var _refresh = function(data) {
+    graph.setData(data);
     graph.setupGrid();
     graph.draw();
   };
 
   return {
-    plot    : plot,
-    refresh : refresh
+    plot : plot,
   };
 };
 
-Graph.SeriesUpdater = function(seriesHolder) {
+Graph.Updater = function(plotter) {
 
-  var seriesCollection = seriesHolder;
+  var seriesCollection = new Graph.SeriesCollection();
+  var graphPlotter = plotter;
 
   var _serverData = function() {
-    return { 
-      "queue_simple"  : Math.random() * 100,
-      "awesome_queue" : Math.random() * 100,
-    }
+    $.ajax({
+      url     : "http://localhost:9393/sqs.json",
+      method  : "GET",
+      success : _successCallback
+    });
   };
 
-  var updateSeriesData = function() {
-    var data = _serverData();
+  var _successCallback = function(data) {
     var series;
     for(var queueName in data) {
       series = _fetchOrCreateQueue(queueName);
       series.add(new Graph.Point(series.total(), data[queueName]));
       seriesCollection.add(series);
     }
+    graphPlotter.plot(seriesCollection.data());
+  };
+
+  var updateData = function() {
+    _serverData();
   };
 
   var _fetchOrCreateQueue = function(name) {
     return (seriesCollection.fetch(name) == undefined) ? new Graph.Series(name) : seriesCollection.fetch(name);
   };
 
-  return {update : updateSeriesData};
+  return {update : updateData};
 };

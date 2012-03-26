@@ -1,16 +1,15 @@
-describe("Graph.SeriesUpdater", function() {
+describe("Graph.Updater", function() {
 
-  var seriesCollection = new Graph.SeriesCollection();
+  var plotter = new Graph.Plotter();
   var updater;
 
   beforeEach(function() {
-    updater = new Graph.SeriesUpdater(seriesCollection);
+    updater = new Graph.Updater(plotter);
   });
 
   it("should create a new queue series collection containing data", function() {
+    spyOn(plotter, 'plot');
     updater.update();
-    expect(seriesCollection.data()[0].length).toEqual(1);
-    updater.update();
-    expect(seriesCollection.data()[0].length).toEqual(2);
+    expect(plotter.plot).toHaveBeenCalled();
   });
 });

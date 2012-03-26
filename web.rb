@@ -17,8 +17,14 @@ class Web < Sinatra::Base
   private
 
   def queue_data_hash
-    queues = Queue.new.list
-    queues.inject({}) {|hash,queue| hash[queue.name] = queue.size; hash}
+    # queues = Queue.new.list
+    # queues.inject({}) {|hash,queue| hash[queue.name] = queue.size; hash}
+    { "simple_queue" => rand(10),
+      "double_queue" => 0,
+      "more_queue" => 0,
+      "another_queue" => 1,
+      "handsome_queue" => rand(50)  
+    }
   end
 
 end
