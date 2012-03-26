@@ -95,7 +95,6 @@ Graph.SeriesCollection = function() {
 
 Graph.Plotter = function(elementId) {
 
-  var seriesCollection = new Graph.SeriesCollection();
   var graph;
   var uiElementId = elementId;
   var initialized = false;
