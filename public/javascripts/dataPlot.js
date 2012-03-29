@@ -21,13 +21,13 @@ Graph.Series = function(seriesName, maxElements, options) {
   var pointCollection = [];
   var _count = 0;
   var _defaultOptions = {
-    color      : "",
+    color      : new Graph.Util().randomColor(),
     label      : seriesName,
     lines      : { show : true  },
     points     : { show : false },
     clickable  : true,
     hoverable  : true,
-    shadowSize : 5
+    shadowSize : 2
   };
 
   var _seriesObject = function() {
@@ -57,7 +57,7 @@ Graph.Series = function(seriesName, maxElements, options) {
     return _name;
   };
 
-  var points = function() {
+  var object = function() {
     var obj = _seriesObject();
     obj.data = pointCollection;
     return obj;
@@ -71,10 +71,23 @@ Graph.Series = function(seriesName, maxElements, options) {
     name   : name,
     add    : add,
     addAll : addAll,
-    points : points,
+    object : object,
     total  : total
   };
 
+};
+
+Graph.Util = function() {
+  var randomColor = function() {
+    var color = "ccc";
+    while(color.toLowerCase() == "cccccc" || color.toLowerCase() == "ccc" )
+    {
+      color = Math.floor(Math.random()*16777215).toString(16);
+    };
+    return ("#"+color);
+  };
+
+  return {randomColor : randomColor};
 };
 
 Graph.SeriesCollection = function() {
@@ -100,7 +113,7 @@ Graph.SeriesCollection = function() {
   var data = function() {
     var dataToReturn = []
     for(var name in seriesCollection) {
-      dataToReturn.push(seriesCollection[name].points());
+      dataToReturn.push(seriesCollection[name].object());
     }
     return dataToReturn;
   };
@@ -154,7 +167,7 @@ Graph.Updater = function(plotter) {
 
   var _serverData = function() {
     $.ajax({
-      url     : "/sqs.json",
+      url     : "/data/alpha/sqs.json",
       method  : "GET",
       success : _successCallback
     });

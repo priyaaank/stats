@@ -8,21 +8,21 @@ class Web < Sinatra::Base
     erb :base
   end
 
-  get '/sqs.json' do
+  get '/data/:env/sqs.json' do
     content_type :json
     status 200
-    queue_data_hash.to_json
+    queue_data_hash(params[:env]||'prod').to_json
   end
 
   private
 
-  def queue_data_hash
-    alpha_queues.inject({}) {|hash,queue| hash[queue.name] = queue.size; hash}
+  def queue_data_for env
+    queues = Queue.new.list
+    queues.select {|queue| queue.name.downcase.include?(env)}
   end
 
-  def alpha_queues
-    queues = Queue.new.list
-    queues.select {|queue| queue.name.downcase.include?("alpha")}
+  def queue_data_hash env
+    queue_data_for(env).inject({}) {|hash,queue| hash[queue.name] = queue.size; hash}
   end
 
 end

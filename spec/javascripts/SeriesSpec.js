@@ -23,7 +23,7 @@ describe("Graph.Series", function() {
       data : [[7,8]]
     }
     series.add(point);
-    expect(series.points()).toEqual(expectedSeriesObject);
+    expect(series.object()).toEqual(expectedSeriesObject);
   });
 
   it("should add a single point object correctly", function() {
@@ -34,7 +34,7 @@ describe("Graph.Series", function() {
       clickable : true, hoverable:true, shadowSize : 5,
       data : [[1,2],[3,4],[5,6],[7,8]]
     }
-    expect(series.points()).toEqual(expectedSeriesObject);
+    expect(series.object()).toEqual(expectedSeriesObject);
   });
 
   it("should honor the max element limit for series", function() {
@@ -43,14 +43,14 @@ describe("Graph.Series", function() {
       fourHundredPoints.push(new Graph.Point(i,j))
     };
     series.addAll(fourHundredPoints);
-    expect(series.points().data.length).toEqual(300);
+    expect(series.object().data.length).toEqual(300);
   });
 
   it("should override the maxlimit value for the graph", function() {
     seriesWithLimit = new Graph.Series("limited_series", 2);
     seriesWithLimit.addAll(points);
-    expect(seriesWithLimit.points().data.length).toEqual(2);
-    expect(seriesWithLimit.points().data).toEqual([[5,6],[7,8]]);
+    expect(seriesWithLimit.object().data.length).toEqual(2);
+    expect(seriesWithLimit.object().data).toEqual([[5,6],[7,8]]);
   });
 
   it("should return the number of elements added in total to a series as size", function() {
@@ -60,7 +60,7 @@ describe("Graph.Series", function() {
     };
     series.addAll(fourHundredPoints);
     expect(series.total()).toEqual(400);
-    expect(series.points().data.length).toEqual(300);
+    expect(series.object().data.length).toEqual(300);
   });
 
 });
