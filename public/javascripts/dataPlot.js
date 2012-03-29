@@ -14,12 +14,30 @@ Graph.Point = function(xCord, yCord) {
   };
 };
 
-Graph.Series = function(seriesName, maxElements) {
+Graph.Series = function(seriesName, maxElements, options) {
   
   var _name = seriesName;
   var _maxElementLimit = (maxElements || 300);
   var pointCollection = [];
   var _count = 0;
+  var _defaultOptions = {
+    color      : "",
+    label      : seriesName,
+    lines      : { show : true  },
+    points     : { show : false },
+    clickable  : true,
+    hoverable  : true,
+    shadowSize : 5
+  };
+
+  var _seriesObject = function() {
+    var obj = {};
+    options = options || {}
+    for(var attribute in _defaultOptions) {
+      obj[attribute] = options[attribute] || _defaultOptions[attribute];
+    };
+    return obj;
+  };
   
   var add = function(point) {
     if(pointCollection.length >= _maxElementLimit) {
@@ -40,7 +58,9 @@ Graph.Series = function(seriesName, maxElements) {
   };
 
   var points = function() {
-    return pointCollection;
+    var obj = _seriesObject();
+    obj.data = pointCollection;
+    return obj;
   };
 
   var total = function() {
