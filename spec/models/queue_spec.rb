@@ -7,7 +7,7 @@ describe Queue do
       let(:queues) {["queue_for_superhero_rescue_events", "queue_for_intergalactic_travel"]}
 
       before do
-        RightAws::Sqs.stub_chain(:new, :queues).and_return(queues)
+        RightAws::SqsGen2.stub_chain(:new, :queues).and_return(queues)
       end
 
       it "should return all queues" do
@@ -19,7 +19,7 @@ describe Queue do
       let(:queues) {[]}
 
       before do
-        RightAws::Sqs.stub_chain(:new, :queues).and_return(queues)
+        RightAws::SqsGen2.stub_chain(:new, :queues).and_return(queues)
       end
 
       it "should return an empty list" do
