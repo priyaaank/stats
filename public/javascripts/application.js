@@ -2,9 +2,10 @@ $(document).ready(function() {
 
   var envList = ['alpha','qa'];
   var registeredUpdaters = [];
-
-  for each(var env in envList) {
-    attachGraphDiv(env)
+  var env;
+  for (var i=0; i<envList.length;i++) {
+    env=envList[i];
+    attachGraphDiv(env);
     var plotter = new Graph.Plotter((env+"graph"));
     var updater = new Graph.Updater(env, plotter);
     registeredUpdaters.push(updater);
@@ -14,8 +15,8 @@ $(document).ready(function() {
   setInterval(periodicRefresh, 15000);
 
   function periodicRefresh() {
-    for each (var updater in registeredUpdaters) {
-      updater.update();
+    for (var i=0; i< registeredUpdaters.length; i++) {
+      registeredUpdaters[i].update();
     };
   }
   
