@@ -27,7 +27,7 @@ Graph.Series = function(seriesName, maxElements, options) {
     points     : { show : false },
     clickable  : true,
     hoverable  : true,
-    shadowSize : 2
+    shadowSize : 1
   };
 
   var _seriesObject = function() {
@@ -160,14 +160,14 @@ Graph.Plotter = function(elementId) {
   };
 };
 
-Graph.Updater = function(plotter) {
+Graph.Updater = function(env, plotter) {
 
   var seriesCollection = new Graph.SeriesCollection();
   var graphPlotter = plotter;
 
   var _serverData = function() {
     $.ajax({
-      url     : "/data/alpha/sqs.json",
+      url     : "/data/"+env+"/sqs.json",
       method  : "GET",
       success : _successCallback
     });
