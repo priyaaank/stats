@@ -8,6 +8,10 @@ class Web < Sinatra::Base
     erb :base
   end
 
+  get '/gauges' do
+    erb :gauges
+  end
+
   get '/data/:env/sqs.json' do
     content_type :json
     status 200
