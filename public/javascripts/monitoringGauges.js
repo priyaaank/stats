@@ -17,7 +17,7 @@ SystemMonitor.Gauge.MasterDefaults = {
 };
 
 SystemMonitor.Gauge.ChildDefaults = {
-  width      : 400, height    : 120,
+  height     : 120,
   redFrom    : 66 , redTo     : 100,
   yellowFrom : 33 , yellowTo  : 66,
   greenFrom  : 0  , greenTo   : 33,
@@ -79,7 +79,7 @@ SystemMonitor.Gauges = function() {
   };
 
   var drawChart = function() {
-    data = {name : "QA", value: 40, children : [{name:'mongo', value:20},{name:'app', value : 80}]};
+    data = {name:"QA", value:21, children:[{name:"mongo", value:12},{name:"app",value:81},{name:"app2",value:64},{name:"app3",value:11},{name:"app4",value:22},{name:"ap5p",value:21}]};
     g = new SystemMonitor.GaugeSeries('master','children', data);
   };
 
