@@ -1,4 +1,4 @@
-['yaml', 'right_aws', 'sinatra/base', 'json'].each {|r| require r }
+['httparty', 'yaml', 'right_aws', 'sinatra/base', 'json'].each {|r| require r }
 Dir["mixins/**/*.rb"].sort.each {|file| require_relative file if file.include?(".rb") }
 Dir["models/**/*.rb"].sort.each {|file| require_relative file if file.include?(".rb") }
 
