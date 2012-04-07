@@ -1,5 +1,3 @@
-#require './models/appconfig'
-
 module Cloudkick
   class Node
 

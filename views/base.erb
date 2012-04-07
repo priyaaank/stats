@@ -3,8 +3,43 @@
     <title>Statistics : The way you want</title>
     <script src="javascripts/_lib/jquery.min.js" type="text/javascript"></script>
     <script src="javascripts/_lib/jquery.flot.js" type="text/javascript"></script>
-    <script src="javascripts/application.js" type="text/javascript"></script>
     <script src="javascripts/dataPlot.js" type="text/javascript"></script>
+    <script language="javascript">
+
+      $(document).ready(function() {
+
+        var envList = ['alpha','qa', 'production'];
+        var registeredUpdaters = [];
+        var env;
+        for (var i=0; i<envList.length;i++) {
+          env=envList[i];
+          attachGraphDiv((env));
+          var plotter = new Graph.Plotter((env+"graph"));
+          var updater = new Graph.Updater(env, plotter);
+          registeredUpdaters.push(updater);
+        }
+
+        periodicRefresh();
+        setInterval(periodicRefresh, 15000);
+
+        function periodicRefresh() {
+          for (var i=0; i< registeredUpdaters.length; i++) {
+            registeredUpdaters[i].update();
+          };
+        }
+
+        function attachGraphDiv(env) {
+          $("body").append(htmlForStatusWidget(env));
+        };
+
+        function htmlForStatusWidget(env) {
+          var htmlString = "<h1>"+env+"</h1> <div id='" + env + "graph'" +
+                           '" style="width:1200px;height:300px;"></div>\n<br />';
+          return htmlString;
+        };
+      });
+
+    </script>
   </head>
 
   <body>

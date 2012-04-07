@@ -1,8 +1,3 @@
-#require 'httparty'
-#require 'ostruct'
-#require './models/cloudkick/node'
-#require './models/appconfig'
-
 class CloudkickWrapper
 
   include HTTParty
@@ -50,7 +45,3 @@ class CloudkickWrapper
   end
 
 end
-
-#c = CloudkickWrapper.new
-#puts c.instance_with_warning_for("alpha")
-

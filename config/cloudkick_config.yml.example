@@ -1,0 +1,12 @@
+key: key
+secret: secret
+env_tag: tag_id_for_env
+work_tag: respective_tag_id
+weba_tag: respective_tag_id
+api_tag: respective_tag_id
+spi_tag: respective_tag_id
+sear_tag: respective_tag_id
+scre_tag: respective_tag_id
+lice_tag: respective_tag_id
+mong_tag: respective_tag_id
+

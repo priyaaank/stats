@@ -69,7 +69,7 @@ SystemMonitor.GaugeSeries = function(masterElement, childElement, data) {
   return { refresh : refresh };
 };
 
-SystemMonitor.Gauges = function(env) {
+SystemMonitor.Gauges = function(env, masterElementId, childrenElementId) {
 
   var gaugeSeries;
   
@@ -88,7 +88,7 @@ SystemMonitor.Gauges = function(env) {
 
   var _successCallback = function(data) {
     if (gaugeSeries == null) {
-      gaugeSeries = new SystemMonitor.GaugeSeries('master','children', data);
+      gaugeSeries = new SystemMonitor.GaugeSeries(masterElementId,childrenElementId, data);
     } else {
       gaugeSeries.refresh(data);
     }
@@ -101,11 +101,4 @@ SystemMonitor.Gauges = function(env) {
   _init();
 
   return { update : periodicRefresh };
-};
-
-var gauge = new SystemMonitor.Gauges("alpha");
-setInterval(refreshGauge, 15000);
-
-function refreshGauge() {
-  gauge.update();
 };
