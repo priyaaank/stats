@@ -1,7 +1,10 @@
 ['httparty', 'yaml', 'right_aws', 'sinatra/base', 'json'].each {|r| require r }
 Dir["models/**/*.rb"].sort.each {|file| require_relative file if file.include?(".rb") }
-
 class Web < Sinatra::Base
+
+  configure :production, :development do
+     enable :logging
+  end
 
   get '/sqs' do
     erb :base
@@ -12,6 +15,7 @@ class Web < Sinatra::Base
   end
 
   get '/data/:env/status.json' do
+    raise :shit
     content_type :json
     status 200
     cloudkick_status_hash(params[:env]).to_json
