@@ -15,7 +15,6 @@ class Web < Sinatra::Base
   end
 
   get '/data/:env/status.json' do
-    raise :shit
     content_type :json
     status 200
     cloudkick_status_hash(params[:env]).to_json

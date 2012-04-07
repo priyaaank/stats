@@ -21,7 +21,7 @@ module Cloudkick
       status_hash = {"ok" => 33, "warning" => 66, "error" => 100}
       upper_bound = status_hash[status.downcase]
       lower_bound = upper_bound - 33
-      rand(lower_bound..upper_bound)
+      (rand(upper_bound - lower_bound) + lower_bound)
     end
   end
 end
