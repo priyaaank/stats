@@ -69,27 +69,43 @@ SystemMonitor.GaugeSeries = function(masterElement, childElement, data) {
   return { refresh : refresh };
 };
 
-SystemMonitor.Gauges = function() {
+SystemMonitor.Gauges = function(env) {
 
-  var g;
+  var gaugeSeries;
   
   var _init = function() {
     google.load('visualization', '1', {packages:['gauge']});
-    google.setOnLoadCallback(drawChart);
+    google.setOnLoadCallback(_serverData);
   };
 
-  var drawChart = function() {
-    data = {name:"QA", value:21, children:[{name:"mongo", value:12},{name:"app",value:81},{name:"app2",value:64},{name:"app3",value:11},{name:"app4",value:22},{name:"ap5p",value:21}]};
-    g = new SystemMonitor.GaugeSeries('master','children', data);
+  var _serverData = function() {
+    $.ajax({
+      url     : "/data/"+env+"/status.json",
+      method  : "GET",
+      success : _successCallback
+    });
   };
 
-  var r = function(d) {
-    g.refresh(d);
+  var _successCallback = function(data) {
+    if (gaugeSeries == null) {
+      gaugeSeries = new SystemMonitor.GaugeSeries('master','children', data);
+    } else {
+      gaugeSeries.refresh(data);
+    }
+  };
+
+  var periodicRefresh = function() {
+    _serverData();
   };
   
   _init();
 
-  return {r:r};
+  return { update : periodicRefresh };
 };
 
-var a = new SystemMonitor.Gauges();
+var gauge = new SystemMonitor.Gauges("alpha");
+setInterval(refreshGauge, 15000);
+
+function refreshGauge() {
+  gauge.update();
+};

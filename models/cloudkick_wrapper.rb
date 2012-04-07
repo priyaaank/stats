@@ -1,7 +1,7 @@
-require 'httparty'
-require 'ostruct'
-require './models/cloudkick/node'
-require './models/appconfig'
+#require 'httparty'
+#require 'ostruct'
+#require './models/cloudkick/node'
+#require './models/appconfig'
 
 class CloudkickWrapper
 
@@ -12,7 +12,14 @@ class CloudkickWrapper
   def initialize
     @oauth_token = fetch_access_token(Appconfig.cloudkick["key"], Appconfig.cloudkick["secret"])
   end
-  
+
+  def updated_status_hash_for_all_nodes_of env
+    collection = NodeCollection.new(nodes_for(env), env)
+    collection.update_nodes_statuses(instance_with_overall_status_for(env))
+    collection.formatted_hash
+  end
+
+  private 
 
   def nodes_for env
     url = "/#{API_VERSION}/nodes?oauth_token=#{@oauth_token}"
@@ -22,9 +29,12 @@ class CloudkickWrapper
     hash.items.collect {|node| Cloudkick::Node.new(node) }
   end
 
-  private 
-  def instance_with_warning_for env
-    
+  def instance_with_overall_status_for env
+    url = "/#{API_VERSION}/status/nodes?oauth_token=#{@oauth_token}"
+    options = {"query" => "tag:#{env}"}
+    url = append_options_to(url, options)
+    hash = CloudkickWrapper.get(url)
+    hash.inject({}) {|hash, (node_id, status)| hash[node_id] = status['overall_check_statuses']; hash;}
   end
 
   def append_options_to url, options
@@ -41,6 +51,6 @@ class CloudkickWrapper
 
 end
 
-c = CloudkickWrapper.new
-c.nodes_for("alpha")
+#c = CloudkickWrapper.new
+#puts c.instance_with_warning_for("alpha")
 

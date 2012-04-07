@@ -1,15 +1,21 @@
 ['httparty', 'yaml', 'right_aws', 'sinatra/base', 'json'].each {|r| require r }
-Dir["mixins/**/*.rb"].sort.each {|file| require_relative file if file.include?(".rb") }
+#Dir["mixins/**/*.rb"].sort.each {|file| require_relative file if file.include?(".rb") }
 Dir["models/**/*.rb"].sort.each {|file| require_relative file if file.include?(".rb") }
 
 class Web < Sinatra::Base
 
-  get '/' do
+  get '/sqs' do
     erb :base
   end
 
-  get '/gauges' do
+  get '/status' do
     erb :gauges
+  end
+
+  get '/data/:env/status.json' do
+    content_type :json
+    status 200
+    cloudkick_status_hash(params[:env]).to_json
   end
 
   get '/data/:env/sqs.json' do
@@ -19,6 +25,10 @@ class Web < Sinatra::Base
   end
 
   private
+
+  def cloudkick_status_hash env
+    CloudkickWrapper.new.updated_status_hash_for_all_nodes_of env
+  end
 
   def queue_data_for env
     queues = Queue.new.list
