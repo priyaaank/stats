@@ -13,7 +13,8 @@ SystemMonitor.Gauge.MasterDefaults = {
   redFrom    : 66 , redTo     : 100,
   yellowFrom : 33 , yellowTo  : 66,
   greenFrom  : 0  , greenTo   : 33,
-  minorTicks : 0  , majorTicks : ["","WARN","","ERROR"]
+  minorTicks : 0  , majorTicks : ["","WARN","","ERROR"],
+  animation  : { duration : 7000}
 };
 
 SystemMonitor.Gauge.ChildDefaults = {
@@ -21,7 +22,8 @@ SystemMonitor.Gauge.ChildDefaults = {
   redFrom    : 66 , redTo     : 100,
   yellowFrom : 33 , yellowTo  : 66,
   greenFrom  : 0  , greenTo   : 33,
-  minorTicks : 0  , majorTicks : ["","WARN","","ERROR"]
+  minorTicks : 0  , majorTicks : ["","WARN","","ERROR"],
+  animation  : { duration : 2000}
 };
 
 SystemMonitor.GaugeSeries = function(masterElement, childElement, data) {
