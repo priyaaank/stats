@@ -5,6 +5,7 @@ module Cloudkick
       hash = hash_from(@environment, over_all_env_status)
       hash["children"] = []
       @nodes.each do |node|
+        next if node.status == "no-agent"
         hash["children"] << hash_from(node.name, node.status)
       end
       hash
