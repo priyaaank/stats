@@ -4,7 +4,7 @@ class NodeCollection
   attr_accessor :nodes, :environment
 
   def initialize(nodes = [], env)
-    @nodes       = nodes
+    @nodes       = nodes.select {|n| n unless n.name.nil? || n.name.empty? }.compact
     @environment = env
   end
 

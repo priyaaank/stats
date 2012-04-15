@@ -9,7 +9,7 @@ SystemMonitor.Gauge.Status = {
 };
 
 SystemMonitor.Gauge.MasterDefaults = {
-  width      : 400, height    : 240,
+  width      : 400, height    : 340,
   redFrom    : 66 , redTo     : 100,
   yellowFrom : 33 , yellowTo  : 66,
   greenFrom  : 0  , greenTo   : 33,
@@ -18,7 +18,7 @@ SystemMonitor.Gauge.MasterDefaults = {
 };
 
 SystemMonitor.Gauge.ChildDefaults = {
-  height     : 120,
+  height     : 120, height    : 290,
   redFrom    : 66 , redTo     : 100,
   yellowFrom : 33 , yellowTo  : 66,
   greenFrom  : 0  , greenTo   : 33,

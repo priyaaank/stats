@@ -10,6 +10,12 @@ class Web < Sinatra::Base
     erb :base
   end
 
+  get '/storage/:bucket' do
+    @file_count, @space = S3.new(params[:bucket]).space_occupied_by(params[:prefix])
+    status 200
+    erb :space
+  end
+
   get '/status' do
     erb :gauges
   end

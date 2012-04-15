@@ -1,0 +1,13 @@
+<html>
+  <head>
+    <title>S3 Storage</title>
+  </head>
+  <body>
+    Storage occupied on S3:
+    <br />
+    <%= "Files    :#{@file_count}" %>
+    <br />
+    <%= "MegaBytes: #{@space/(1024*1024)}" %>
+    <br />
+    <%= "GigaBytes: #{@space/(1024*1024*1024)}" %>
+  </body>
