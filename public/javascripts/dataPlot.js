@@ -135,6 +135,7 @@ Graph.Plotter = function(elementId) {
   var plotOptions = {
     series    : {showSize: 5},
     points    : {show:true},
+    legend    : {noColumns: 3, position: "nw"},
     lines     : {show:true},
     yaxis     : {min: 0},
     xaxis     : {show: false}
