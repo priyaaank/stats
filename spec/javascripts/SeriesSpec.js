@@ -19,7 +19,7 @@ describe("Graph.Series", function() {
     expectedSeriesObject = {
       color : "black", label:"awesome_series",
       lines : {show:true}, points : {show:false},
-      clickable : true, hoverable:true, shadowSize : 5,
+      clickable : true, hoverable:true, shadowSize : 1,
       data : [[7,8]]
     }
     series.add(point);
@@ -31,7 +31,7 @@ describe("Graph.Series", function() {
     expectedSeriesObject = {
       color : "black", label:"awesome_series",
       lines : {show:true}, points : {show:false},
-      clickable : true, hoverable:true, shadowSize : 5,
+      clickable : true, hoverable:true, shadowSize : 1,
       data : [[1,2],[3,4],[5,6],[7,8]]
     }
     expect(series.object()).toEqual(expectedSeriesObject);

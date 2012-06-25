@@ -23,14 +23,14 @@ describe("Graph.SeriesCollection", function() {
     seriesOne = {
       color : "black", label:"test_series",
       lines : {show:true}, points : {show:false},
-      clickable : true, hoverable:true, shadowSize : 5,
-      data : [[1,2],[3,4]] 
+      clickable : true, hoverable:true, shadowSize : 1,
+      data : [[1,2],[3,4]]
     }
     seriesTwo = {
       color : "blue", label:"new_series",
       lines : {show:true}, points : {show:false},
-      clickable : true, hoverable:true, shadowSize : 5,
-      data : [[10,12]] 
+      clickable : true, hoverable:true, shadowSize : 1,
+      data : [[10,12]]
     }
     secondSeries = new Graph.Series("new_series",100, {color:"blue"});
     secondSeries.add(new Graph.Point(10,12));

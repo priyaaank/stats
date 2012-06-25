@@ -1,7 +1,7 @@
-var Graph = {}; 
+var Graph = {};
 
 Graph.Point = function(xCord, yCord) {
-  
+
   var xCordinate = xCord;
   var yCordinate = yCord;
 
@@ -15,7 +15,7 @@ Graph.Point = function(xCord, yCord) {
 };
 
 Graph.Series = function(seriesName, maxElements, options) {
-  
+
   var _name = seriesName;
   var _maxElementLimit = (maxElements || 300);
   var pointCollection = [];
@@ -38,7 +38,7 @@ Graph.Series = function(seriesName, maxElements, options) {
     };
     return obj;
   };
-  
+
   var add = function(point) {
     if(pointCollection.length >= _maxElementLimit) {
       pointCollection = pointCollection.slice(1);
@@ -52,7 +52,7 @@ Graph.Series = function(seriesName, maxElements, options) {
       add(element);
     });
   };
-  
+
   var name = function() {
     return _name;
   };
@@ -91,7 +91,7 @@ Graph.Util = function() {
 };
 
 Graph.SeriesCollection = function() {
-  
+
   var seriesCollection = {};
 
   var add = function(series) {
@@ -118,8 +118,8 @@ Graph.SeriesCollection = function() {
     return dataToReturn;
   };
 
-  return { 
-    add  : add, 
+  return {
+    add  : add,
     list : list,
     fetch: fetch,
     data : data
@@ -134,11 +134,10 @@ Graph.Plotter = function(elementId) {
 
   var plotOptions = {
     series    : {showSize: 5},
-    points    : {show:true},
     legend    : {noColumns: 3, position: "nw"},
     lines     : {show:true},
     yaxis     : {min: 0},
-    xaxis     : {show: false}
+    xaxis     : {show: true, mode: "time", minTickSize: [1, "minute"]}
   };
 
   var plot = function(data) {
@@ -176,9 +175,10 @@ Graph.Updater = function(env, plotter) {
 
   var _successCallback = function(data) {
     var series;
+    var now = new Date();
     for(var queueName in data) {
       series = _fetchOrCreateQueue(queueName);
-      series.add(new Graph.Point(series.total(), data[queueName]));
+      series.add(new Graph.Point(now, data[queueName]));
       seriesCollection.add(series);
     }
     graphPlotter.plot(seriesCollection.data());
