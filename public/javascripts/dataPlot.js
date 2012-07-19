@@ -160,6 +160,16 @@ Graph.Plotter = function(elementId) {
   };
 };
 
+Graph.ColorPalette = function(data) {
+  var byOffset = function(name) {
+    var index = Object.keys(data).indexOf(name);
+    var color = parseInt("FFFFFF", 16) * (index + 1)/ (Object.keys(data).length + 1);
+    var hexColor = parseInt(color).toString(16);
+    return ("000000" + hexColor).slice(-6);
+  }
+  return {byOffset : byOffset}
+};
+
 Graph.Updater = function(env, plotter) {
 
   var seriesCollection = new Graph.SeriesCollection();
@@ -176,8 +186,9 @@ Graph.Updater = function(env, plotter) {
   var _successCallback = function(data) {
     var series;
     var now = new Date();
+    var colorPalette = new Graph.ColorPalette(data)
     for(var queueName in data) {
-      series = _fetchOrCreateQueue(queueName);
+      series = _fetchOrCreateQueue(colorPalette, queueName);
       series.add(new Graph.Point(now, data[queueName]));
       seriesCollection.add(series);
     }
@@ -188,8 +199,8 @@ Graph.Updater = function(env, plotter) {
     _serverData();
   };
 
-  var _fetchOrCreateQueue = function(name) {
-    return (seriesCollection.fetch(name) == undefined) ? new Graph.Series(name) : seriesCollection.fetch(name);
+  var _fetchOrCreateQueue = function(colorPalette, name) {
+    return (seriesCollection.fetch(name) == undefined) ? new Graph.Series(name, null, {color : colorPalette.byOffset(name)}) : seriesCollection.fetch(name);
   };
 
   return {update : updateData};
