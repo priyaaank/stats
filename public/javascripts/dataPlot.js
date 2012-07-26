@@ -136,6 +136,11 @@ Graph.Plotter = function(elementId) {
     series    : {showSize: 5},
     legend    : {noColumns: 3, position: "nw"},
     lines     : {show:true},
+    grid      : {hoverable: true},
+    tooltip   : true,
+    tooltipOpts: {
+      content: "%s = %y",
+    },
     yaxis     : {min: 0},
     xaxis     : {show: true, mode: "time", minTickSize: [1, "minute"]}
   };
@@ -160,12 +165,14 @@ Graph.Plotter = function(elementId) {
   };
 };
 
-Graph.ColorPalette = function(data) {
+Graph.ColorPalette = function(data, webSafeColors) {
+  if (!webSafeColors) {
+    webSafeColors = ["cd5c5c", "ff0000", "8b0000", "ff69b4", "c71585", "ffa500", "ffff00", "bdb76b", "ff00ff", "9400d3", "000000", "0000ff", "00bfff", "4682b4", "e0ffff", "008080", "556b2f", "00ff00", "c0c0c0", "708090"]
+  }
   var byOffset = function(name) {
     var index = Object.keys(data).indexOf(name);
-    var color = parseInt("FFFFFF", 16) * (index + 1)/ (Object.keys(data).length + 1);
-    var hexColor = parseInt(color).toString(16);
-    return ("000000" + hexColor).slice(-6);
+    var color = index % webSafeColors.length
+    return webSafeColors[color];
   }
   return {byOffset : byOffset}
 };
